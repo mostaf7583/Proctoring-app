@@ -1,0 +1,45 @@
+MATH3BI = Course('MATH3BI')
+MATH5   = Course('MATH5')
+CSEN704 =  Course('CSEN1022')
+CSEN301 = Course('CSEN301')
+CSEN903 = Course('CSEN903')
+DMET904 = Course('DMET904')
+DMET901 = Course('DMET901') #CV
+CSEN901 = Course('CSEN901') # AI
+CSEN703 = Course('CSEN703') #analysis
+CSEN701 = Course('CSEN701') #embedded
+CSEN702 = Course('CSEN702')#microprocessors
+CSEN605 = Course('CSEN605')#DSD
+CSEN501 = Course('CSEN501')
+DMET501 = Course('DMET501') #intro to media
+CSIS301 = Course('CSIS301')
+CSIS104 = Course('CSIS104') #pharmacy
+CSIS105 = Course('CSIS105')
+CSEN503 = Course('CSEN503')
+CSIS101 = Course('CSIS101')
+DMET502 = Course('DMET502') #GRAPHICS
+CSEN909 = Course('CSEN909')
+BINF711 = Course('BINF711')
+CSEN933 = Course('CSEN933')
+DMET706 = Course('DMET706')
+DMET703 = Course('DMET703')
+DMET702 = Course('DMET702')
+DMET704 = Course('DMET704')
+CSEN102 = Course('CSEN102')
+CSIS102 = Course('CSIS102')
+
+
+CSIS402 = Course('CSIS402')
+CSEN401 = Course('CSEN401')
+CSEN403 = Course('CSEN403')
+CSEN404 = Course('CSEN404')
+CSEN404 = Course('CSEN404') #INTRO TO NETWORKS
+
+CSEN601  = Course('CSEN601') #CA
+DMET602  = Course('DMET602') #NETWORKS AND MEDIA LAB
+CSEN602  = Course('CSEN602') #OS
+CSEN603  = Course('CSEN603') #SE
+CSEN604  = Course('CSEN604') #DB2
+NETW1009 = Course('NETW1009') #Cloud Computing
+CSEN202  = Course('CSEN202') #CS2
+CSIS202  = Course('CSIS202') 

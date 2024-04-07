@@ -10,7 +10,8 @@
   padding: 20px;
   display: flex;
   align-items: center;
-  max-width: 600px;
+  /* make it foer ipad */
+  max-width: 90%;
   margin: 0 auto;
   border-bottom: 1px solid #f2f2f2;
 }
