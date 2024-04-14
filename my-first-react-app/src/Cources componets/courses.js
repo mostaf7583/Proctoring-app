@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { List, ListItem, ListItemText, TextField } from '@material-ui/core';
-import { Autocomplete } from '@mui/material';
-import CardList from "./Cources componets/courses";
+import React, { useState } from 'react';
 
-const Home = () => {
-  const [selectedCourse, setSelectedCourse] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  
+function CardInput({ onAddCard }) {
+  const [slotName, setSlotName] = useState('');
+  const [quizDate, setQuizDate] = useState('');
+  const [courseCode, setCourseCode] = useState('');
+  const [numOfSlots, setNumOfSlots] = useState('');
+   
   const courses = [
     { code: 'MATH3BI', name: 'Mathematics III (BI)' },
     { code: 'MATH5', name: 'Mathematics V' },
@@ -51,30 +50,65 @@ const Home = () => {
     { code: 'CSIS202', name: 'Introduction to Information Technology II' }
 ];
 
-console.log(courses);
-
-  const handleListItemClick = (event, course) => {
-    setSelectedCourse(course);
+  const handleAddCard = () => {
+    onAddCard({ slot_name: slotName, quiz_date: quizDate, course_code: courseCode, num_of_slots: numOfSlots });
+    setSlotName('');
+    setQuizDate('');
+    setCourseCode('');
+    setNumOfSlots('');
   };
 
-  const filteredCourses = courses.filter(course => {
-    return `${course.code}: ${course.name}`.toLowerCase().includes(searchQuery.toLowerCase());
-  });
-
   return (
-    <div>
-      <Autocomplete
-        options={courses}
-        getOptionLabel={(course) => `${course.code}: ${course.name}`}
-        value={selectedCourse}
-        onChange={(event, newValue) => {
-          setSelectedCourse(newValue);
-        }}
-        renderInput={(params) => <TextField {...params} label="Search" variant="outlined" />}
+    <div className="card-input">
+      <input
+        type="text"
+        placeholder="Slot Name"
+        value={slotName}
+        onChange={(e) => setSlotName(e.target.value)}
       />
-      <CardList />
+      <input
+        type="date"
+        placeholder="Quiz Date"
+        value={quizDate}
+        onChange={(e) => setQuizDate(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Course Code"
+        value={courseCode}
+        onChange={(e) => setCourseCode(e.target.value)}
+      />
+      <input
+        type="number"
+        placeholder="Number of Slots"
+        value={numOfSlots}
+        onChange={(e) => setNumOfSlots(e.target.value)}
+      />
+      <button onClick={handleAddCard}>+</button>
     </div>
   );
 }
 
-export default Home;
+function CardList() {
+  const [cards, setCards] = useState([]);
+
+  const handleAddCard = (newCard) => {
+    setCards([...cards, newCard]);
+  };
+
+  return (
+    <div className="card-list">
+      <CardInput onAddCard={handleAddCard} />
+      {cards.map((card, index) => (
+        <div key={index} className="card">
+          <p>Slot Name: {card.slot_name}</p>
+          <p>Quiz Date: {card.quiz_date}</p>
+          <p>Course Code: {card.course_code}</p>
+          <p>Number of Slots: {card.num_of_slots}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default CardList;
