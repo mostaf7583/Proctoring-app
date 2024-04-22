@@ -9,7 +9,7 @@ const StudentTable = () => {
     useEffect(() => {
         const getExtraLoadData = async () => {
             try {
-                const response = await axios.get("http://localhost:4000/extra_load");
+                const response = await axios.get("https://mostafasallam.pythonanywhere.com/extra_load");
                 console.log(response.data);
                 setExtraLoadData(response.data);
             } catch (error) {
