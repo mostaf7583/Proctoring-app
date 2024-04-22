@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Proctoring-app/static/css/main.4d73786b.css",
+    "main.js": "/Proctoring-app/static/js/main.a5e6d467.js",
+    "index.html": "/Proctoring-app/index.html",
+    "main.4d73786b.css.map": "/Proctoring-app/static/css/main.4d73786b.css.map",
+    "main.a5e6d467.js.map": "/Proctoring-app/static/js/main.a5e6d467.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4d73786b.css",
+    "static/js/main.a5e6d467.js"
+  ]
+}
