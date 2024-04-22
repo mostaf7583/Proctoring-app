@@ -85,7 +85,7 @@ function CardInput() {
     console.log(slotNumber);
     setLoading(true); // Set loading to true when API request is made
     axios
-      .post("http://127.0.0.1:4000/process_data", {
+      .post("https://mostafasallam.pythonanywhere.com/process_data", {
         slot_name: (quizDate.format("ddd") + "" + slotNumber).toUpperCase(),
         quiz_date: quizDate.format("YYYY-MM-DD"),
         course_code: courseCodes,
