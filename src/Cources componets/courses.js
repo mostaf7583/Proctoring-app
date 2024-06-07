@@ -28,10 +28,11 @@ function CardInput() {
 
   const [quizDATE, setQuizDATE] = useState(null);
   const [quizzes, setQuizzes] = useState([
-    { quiz_date: quizDATE, num_of_slots: 0, slot_name: "", course_codes: [] }
+    { quiz_date: quizDATE, num_of_slots: 0, slot: "", course_codes: [] }
   ]);
   const [loading, setLoading] = useState(false); 
-  const [Data, setData] = useState([]); // State for data from API
+  const [Data, setData] = useState([]); 
+  const [Slot,setSlot]=useState([]);
 
   const courses = [
     { code: "MATH3BI", name: "Mathematics III (BI)" },
@@ -81,16 +82,16 @@ function CardInput() {
 
   
 
-  const handleQuizChange = (index, field, value) => {
-    
-   
-    const updatedQuizzes = [...quizzes];
+  const handleQuizChange = (index, field, value,slotNumber=1) => {
+      const updatedQuizzes = [...quizzes]; //
+  
     updatedQuizzes[index][field] = value;
     setQuizzes(updatedQuizzes);
     console.log(updatedQuizzes);
   };
+  
   const handleAddQuiz = () => {
-    setQuizzes([...quizzes, { quiz_date: null, num_of_slots: 0  , slot_name: "", course_codes: [] }]);
+    setQuizzes([...quizzes, { quiz_date: null, num_of_slots: 0  , slot: "", course_codes: []}]);
   };
   const handleRemoveQuiz = (index) => {
     const updatedQuizzes = quizzes.filter((_, i) => i !== index);
@@ -149,6 +150,7 @@ function CardInput() {
               onChange={(newValue) => {
                 
                 handleQuizChange(index, "quiz_date", newValue); 
+                
               
               
          
@@ -168,12 +170,19 @@ function CardInput() {
             required
           />
 
-          <TextField
-            label="Slot Name"
+          <Select
+            label="Slot Number"
             value={quiz.slot_name}
-            onChange={(e) => handleQuizChange(index, "slot_name", e.target.value)}
+            onChange={(e) => handleQuizChange(index, "slot",e.target.value)}
             style={{ width: "100%", marginBottom: "2%" }}
-          />
+            required
+          >
+            <MenuItem value="1">1</MenuItem>
+            <MenuItem value="2">2</MenuItem>
+            <MenuItem value="3">3</MenuItem>
+            <MenuItem value="4">4</MenuItem>
+            <MenuItem value="5">5</MenuItem>
+          </Select>
 
           <Button onClick={() => handleRemoveQuiz(index)}>Remove Quiz</Button>
         </div>
