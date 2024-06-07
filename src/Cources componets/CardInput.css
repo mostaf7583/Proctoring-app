@@ -1,0 +1,99 @@
+/* CardInput.css */
+
+.card-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 100%;
+  margin: 0 10px;
+  padding: 20px 0;
+}
+
+/* Add this to make buttons sit next to each other */
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* Optional: Adds space between buttons */
+}
+
+/* Change display to inline-block for inline alignment */
+.date-picker,
+.text-field,
+.select-field {
+  width: calc(33.33% - 20px); /* Adjust width as needed */
+  margin-right: 20px; /* Add margin between fields */
+}
+
+/* Additional margin to create space */
+.date-picker,
+.text-field,
+.select-field {
+  margin-bottom: 20px; /* Add margin bottom for space between rows */
+}
+
+.button {
+  width: 100%;
+  margin-bottom: 2%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.export-button {
+  background-color: #52c41a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+  cursor: pointer;
+  align-self: center;
+  margin-bottom: 10px;
+}
+
+.export-button {
+  background-color: #52c41a; 
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0px 4px 6px rgba(167, 5, 5, 0.1);
+  cursor: pointer;
+  align-self: center;
+  margin-bottom: 10px;
+}
+
+.table-container {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  width: 90%; /* Change this to make the table take most of the screen */
+}
+
+.table-container thead tr {
+  background-color: #009879;
+  color: #ffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+.table-container th,
+.table-container td {
+  padding: 12px 15px;
+}
+
+.table-container tbody tr {
+  border-bottom: 1px solid #dddd;
+}
+
+.table-container tbody tr:nth-last-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.table-header {
+  margin-bottom: 10px;
+}

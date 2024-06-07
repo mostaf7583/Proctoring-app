@@ -1,38 +1,37 @@
-  import React, { useState } from "react";
-  import { List, ListItem, ListItemText, TextField } from "@material-ui/core";
-  import { Autocomplete } from "@mui/material";
-  import { Button } from "@mui/material";
-  import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-  import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-  import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-  import axios from "axios";
-  import dayjs, { Dayjs } from "dayjs";
-  import { MenuItem } from "@mui/material";
-  import { Select } from "@mui/material";
-  import { CircularProgress } from "@mui/material";
-  import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-  import {
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-  } from "@mui/material";
-  import * as XLSX from 'xlsx';
-
+import React, { useState } from "react";
+import { List, ListItem, ListItemText, TextField } from "@material-ui/core";
+import { Autocomplete } from "@mui/material";
+import { Button } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import axios from "axios";
+import dayjs, { Dayjs } from "dayjs";
+import { MenuItem } from "@mui/material";
+import { Select } from "@mui/material";
+import { CircularProgress } from "@mui/material";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
+import * as XLSX from 'xlsx';
+import './CardInput.css'; // Import the CSS file
 
 function CardInput() {
-
 
   const [quizDATE, setQuizDATE] = useState(null);
   const [quizzes, setQuizzes] = useState([
     { quiz_date: quizDATE, num_of_slots: 0, slot: "", course_codes: [] }
   ]);
-  const [loading, setLoading] = useState(false); 
-  const [Data, setData] = useState([]); 
-  const [Slot,setSlot]=useState([]);
+  const [loading, setLoading] = useState(false);
+  const [Data, setData] = useState([]);
+  const [Slot, setSlot] = useState([]);
 
   const courses = [
     { code: "MATH3BI", name: "Mathematics III (BI)" },
@@ -79,46 +78,47 @@ function CardInput() {
   ];
   const [quizDate, setQuizDate] = useState(null);
 
+  const handleQuizChange = (index, field, value, slotNumber = 1) => {
+    const updatedQuizzes = [...quizzes]; //
 
-  
-
-  const handleQuizChange = (index, field, value,slotNumber=1) => {
-      const updatedQuizzes = [...quizzes]; //
-  
     updatedQuizzes[index][field] = value;
     setQuizzes(updatedQuizzes);
     console.log(updatedQuizzes);
   };
-  
+
   const handleAddQuiz = () => {
-    setQuizzes([...quizzes, { quiz_date: null, num_of_slots: 0  , slot: "", course_codes: []}]);
+    setQuizzes([...quizzes, { quiz_date: null, num_of_slots: 0, slot: "", course_codes: [] }]);
   };
   const handleRemoveQuiz = (index) => {
     const updatedQuizzes = quizzes.filter((_, i) => i !== index);
     setQuizzes(updatedQuizzes);
   };
   const handleSubmit = () => {
+    if (quizzes.some((quiz) => quiz.course_codes.length === 0)) {
+      alert("Please enter  quizzes information");
+      return;
+    }
     setLoading(true);
     console.log(quizzes);
     axios
-    .post("http://127.0.0.1:4000/process_data", {
-      quizzes: quizzes.map((quiz) => ({
-        ...quiz,
-        quiz_date: dayjs(quiz.quiz_date).format("YYYY-MM-DD"), // Format the date
-      })),
-    })
-    .then((response) => {
-      setLoading(false);
-      setData(response.data);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      .post("http://127.0.0.1:4000/process_data", {
+        quizzes: quizzes.map((quiz) => ({
+          ...quiz,
+          quiz_date: dayjs(quiz.quiz_date).format("YYYY-MM-DD"), // Format the date
+        })),
+      })
+      .then((response) => {
+        setLoading(false);
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
   return (
     <div className="card-input">
       {quizzes.map((quiz, index) => (
-        <div key={index}>
+        <div key={index} className="quiz-container">
           <Autocomplete
             multiple
             options={courses}
@@ -132,12 +132,11 @@ function CardInput() {
               }
             }}
             renderInput={(params) => (
-              <TextField {...params} label="Course Codes" variant="outlined" />
+              <TextField {...params} label="Course Codes" variant="outlined" className="text-field" />
             )}
             isOptionEqualToValue={(option, value) =>
               option && value && option.code === value.code
             }
-            style={{ width: "100%", marginBottom: "2%" }}
           />
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -145,16 +144,12 @@ function CardInput() {
               required
               label="Quiz Date"
               format="YYYY-MM-DD"
-
               value={quiz.quiz_date}
               onChange={(newValue) => {
-                
-                handleQuizChange(index, "quiz_date", newValue); 
-                
-              
-              
-         
+                handleQuizChange(index, "quiz_date", newValue);
               }}
+              shouldDisableDate={(day) => day.day() === 5} // Disables Fridays
+              className="date-picker"
             />
           </LocalizationProvider>
 
@@ -162,19 +157,19 @@ function CardInput() {
             type="number"
             label="Number of TAs"
             value={quiz.num_of_slots}
-            onChange={(e) => {handleQuizChange(index, "num_of_slots", e.target.value)
-            console.log(e.target.value);
-            }
-          }
-            style={{ width: "100%", marginBottom: "2%" }}
+            onChange={(e) => {
+              handleQuizChange(index, "num_of_slots", e.target.value);
+              console.log(e.target.value);
+            }}
+            className="text-field"
             required
           />
 
           <Select
             label="Slot Number"
-            value={quiz.slot_name}
-            onChange={(e) => handleQuizChange(index, "slot",e.target.value)}
-            style={{ width: "100%", marginBottom: "2%" }}
+            value={quiz.slot}
+            onChange={(e) => handleQuizChange(index, "slot", e.target.value)}
+            className="select-field"
             required
           >
             <MenuItem value="1">1</MenuItem>
@@ -184,209 +179,201 @@ function CardInput() {
             <MenuItem value="5">5</MenuItem>
           </Select>
 
-          <Button onClick={() => handleRemoveQuiz(index)}>Remove Quiz</Button>
+          <Button onClick={() => handleRemoveQuiz(index)} className="button">Remove Quiz</Button>
         </div>
       ))}
 
-      <Button onClick={handleAddQuiz}>Add Quiz</Button>
+      <Button onClick={handleAddQuiz} className="button">Add Quiz</Button>
 
       {loading ? (
-        <CircularProgress style={{ marginBottom: "2%" }} />
+        <CircularProgress className="button" />
       ) : (
         <Button
           onClick={handleSubmit}
-          style={{ width: "100%", marginBottom: "2%" }}
           variant="contained"
           color="primary"
+          className="button"
         >
           Submit
         </Button>
       )}
 
-{Data && <ScheduleTable data={Data} />}
-
+      {Data && <ScheduleTable data={Data} />}
     </div>
   );
 }
 
 export default CardInput;
-  function ScheduleTable({ data }) {
-    if (!data || Object.keys(data).length === 0) {
-      return <h2>Please enter data first</h2>;
-    }
-      console.log(data);
-    const freeSchedule = data.free_schedule;
-    function generateExcel(data, fileName) {
-      const wb = XLSX.utils.book_new();
-    
-      // Parse best_schedule
-      const bestScheduleData = [];
-      for (let slot in data.best_schedule) {
-        const sheetData = data.best_schedule[slot].map((name, index) => ({ Slot: slot, Index: index + 1, Name: name }));
-        bestScheduleData.push(...sheetData);
-      }
-      const bestScheduleWS = XLSX.utils.json_to_sheet(bestScheduleData);
-      XLSX.utils.book_append_sheet(wb, bestScheduleWS, 'Best Schedule');
-    
-      // Parse free_schedule
-      const freeScheduleData = JSON.parse(data.free_schedule).map(item => ({
-        Slot: item.slot,
-        TA_Name: item.ta_name.trim(),
-        TA_Courses: item.ta_courses.join(', '),
-        TA_Day_Off: item.ta_day_off
-      }));
-      const freeScheduleWS = XLSX.utils.json_to_sheet(freeScheduleData);
-      XLSX.utils.book_append_sheet(wb, freeScheduleWS, 'Free Schedule');
-    
-      // Parse initial_proctoring
-      const initialProctoringData = [];
-      for (let dateSlot in data.initial_proctoring) {
-        const [slot, date] = dateSlot.split(' ');
-        const exams = data.initial_proctoring[dateSlot].map(([course, proctors]) => ({
-          Slot: slot,
-          Date: date,
-          Course: course,
-          Proctors: proctors.join(', ')
-        }));
-        initialProctoringData.push(...exams);
-      }
-      const initialProctoringWS = XLSX.utils.json_to_sheet(initialProctoringData);
-      XLSX.utils.book_append_sheet(wb, initialProctoringWS, 'Initial Proctoring');
-    
-      // Save the Excel file
-      XLSX.writeFile(wb, fileName + '.xlsx');
-    }
-    
-    const handleExport = () => {
-      console.log(data.best_schedule);
-      console.log(data.initial_proctoring);
-      console.log(freeSchedule);
-      generateExcel(data, 'Schedule')
-    };
-    return (
-      <>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", marginBottom: "20px" }}>
-        <Button
-          onClick={handleExport}
-          style={{
-            backgroundColor: "#52c41a", // Green color
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            padding: "10px 20px",
-            fontSize: "16px",
-            fontWeight: "bold",
-            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Adding shadow
-            transition: "background-color 0.3s",
-            cursor: "pointer",
-            alignSelf: "center",
-            marginBottom: "10px"
-          }}
-          // Add hover effect
-          onMouseEnter={e => e.target.style.backgroundColor = "#389e0d"}
-          onMouseLeave={e => e.target.style.backgroundColor = "#52c41a"}
-        >
-          Export to XLSX
-        </Button>
 
-        <div>
-          <h2 style={{ marginBottom: "10px" }}>Best Schedule</h2>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Day/Time Slot</TableCell>
-                  <TableCell>TAs</TableCell>
+function ScheduleTable({ data }) {
+  if (!data || Object.keys(data).length === 0) {
+    return <h2>Please enter data first</h2>;
+  }
+  console.log(data);
+  const freeSchedule = data.free_schedule;
+
+  function generateExcel(data, fileName) {
+    const wb = XLSX.utils.book_new();
+
+    const bestScheduleData = [];
+    for (let slot in data.best_schedule) {
+      const sheetData = data.best_schedule[slot].map((name, index) => ({ Slot: slot, Index: index + 1, Name: name }));
+      bestScheduleData.push(...sheetData);
+    }
+    const bestScheduleWS = XLSX.utils.json_to_sheet(bestScheduleData);
+    XLSX.utils.book_append_sheet(wb, bestScheduleWS, 'Best Schedule');
+    // Check if data.free_schedule is an object
+    if (typeof data.free_schedule === 'object') {
+      // Transform the data directly
+      const freeScheduleData = Object.entries(data.free_schedule).map(([slot, tas]) => ({
+        Slot: slot,
+        TA_Name: tas.join(', ')
+      }));
+
+      // Create the Excel sheet
+      const freeScheduleWS = XLSX.utils.json_to_sheet(freeScheduleData);
+
+      // Append the sheet to the workbook
+      XLSX.utils.book_append_sheet(wb, freeScheduleWS, 'Free Schedule');
+    } else {
+      console.error('data.free_schedule is not an object.');
+    }
+
+    const initialProctoringData = [];
+    for (let dateSlot in data.initial_proctoring) {
+      const [slot, date] = dateSlot.split(' ');
+      const exams = data.initial_proctoring[dateSlot].map(([course, proctors]) => ({
+        Slot: slot,
+        Date: date,
+        Course: course,
+        Proctors: proctors.join(', ')
+      }));
+      initialProctoringData.push(...exams);
+    }
+    const initialProctoringWS = XLSX.utils.json_to_sheet(initialProctoringData);
+    XLSX.utils.book_append_sheet(wb, initialProctoringWS, 'Initial Proctoring');
+
+    XLSX.writeFile(wb, fileName + '.xlsx');
+  }
+
+  const handleExport = () => {
+    console.log(data.best_schedule);
+    console.log(data.initial_proctoring);
+    console.log(freeSchedule);
+    generateExcel(data, 'Schedule');
+  };
+
+  return (
+    <div className="table-container">
+      <Button 
+        onClick={handleExport}
+        className="export-button"
+      >
+        Export to XLSX
+      </Button>
+
+      <div>
+        <h2 className="table-header">Best Schedule</h2>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Day/Time Slot</TableCell>
+                <TableCell>TAs</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {Object.keys(data.best_schedule).map((daySlot) => (
+                <TableRow key={daySlot}>
+                  <TableCell>{daySlot}</TableCell>
+                  <TableCell>
+                    <Table>
+                      <TableBody>
+                        {data.best_schedule[daySlot].map((student, index) => (
+                          <TableRow key={index}>
+                            <TableCell>{student}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {Object.keys(data.best_schedule).map((daySlot) => (
-                  <TableRow key={daySlot}>
-                    <TableCell>{daySlot}</TableCell>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+
+      <div>
+        <h2 className="table-header">Free Schedule</h2>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Day/Time Slot</TableCell>
+                <TableCell>TA Name</TableCell>
+                <TableCell>TA Courses</TableCell>
+                <TableCell>TA Day Off</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {Object.keys(freeSchedule).map((slot) => (
+                <TableRow key={slot}>
+                  <TableCell>{slot}</TableCell>
+                  <TableCell>
                     <TableCell>
                       <Table>
                         <TableBody>
-                          {data.best_schedule[daySlot].map((student, index) => (
-                            <TableRow key={index}>
-                              <TableCell>{student}</TableCell>
-                            </TableRow>
+                          {freeSchedule[slot].map((name, index) => (
+                            <TableRow key={index}><TableCell>{name}</TableCell></TableRow >
                           ))}
                         </TableBody>
                       </Table>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
 
-        <div>
-          <h2 style={{ marginBottom: "10px" }}>Free Schedule</h2>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Day/Time Slot</TableCell>
-                  <TableCell>TA Name</TableCell>
-                  <TableCell>TA Courses</TableCell>
-                  <TableCell>TA Day Off</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-              {Object.keys(freeSchedule).map((slot) => (
-  <TableRow key={slot}>
-    <TableCell>{slot}</TableCell>
-    <TableCell>
-      {freeSchedule[slot].map((name, index) => (
-        <div key={index}>{name}</div>
-      ))}
-    </TableCell>
-  </TableRow>
-))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
-
-        <div>
-          <h2 style={{ marginBottom: "10px" }}>Initial Proctoring</h2>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Date/Time Slot</TableCell>
-                  <TableCell>Course</TableCell>
-                  <TableCell>TAs</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {Object.keys(data.initial_proctoring).map((dateTime) => (
-                  <TableRow key={dateTime}>
-                    <TableCell>{dateTime}</TableCell>
-                    <TableCell>
-                      {data.initial_proctoring[dateTime][0][0]}
                     </TableCell>
-                    <TableCell>
-                      <Table>
-                        <TableBody>
-                          {data.initial_proctoring[dateTime][0][1].map(
-                            (ta, index) => (
-                              <TableRow key={index}>
-                                <TableCell>{ta}</TableCell>
-                              </TableRow>
-                            )
-                          )}
-                        </TableBody>
-                      </Table>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
-      </>
-    );
-  }
+
+      <div>
+        <h2 className="table-header">Initial Proctoring</h2>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Date/Time Slot</TableCell>
+                <TableCell>Course</TableCell>
+                <TableCell>TAs</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {Object.keys(data.initial_proctoring).map((dateTime) => (
+                <TableRow key={dateTime}>
+                  <TableCell>{dateTime}</TableCell>
+                  <TableCell>
+                    {data.initial_proctoring[dateTime][0][0]}
+                  </TableCell>
+                  <TableCell>
+                    <Table>
+                      <TableBody>
+                        {data.initial_proctoring[dateTime][0][1].map((ta, index) => (
+                          <TableRow key={index}>
+                            <TableCell>{ta}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </div>
+  );
+}
