@@ -7,6 +7,7 @@
   max-width: 100%;
   margin: 0 10px;
   padding: 20px 0;
+  gap: 1rem;
 }
 
 /* Add this to make buttons sit next to each other */
@@ -22,6 +23,8 @@
 .select-field {
   width: calc(33.33% - 20px); /* Adjust width as needed */
   margin-right: 20px; /* Add margin between fields */
+  gap: 10rem;
+  
 }
 
 /* Additional margin to create space */

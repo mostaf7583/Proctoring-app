@@ -34,48 +34,50 @@ function CardInput() {
   const [Slot, setSlot] = useState([]);
 
   const courses = [
-    { code: "MATH3BI", name: "Mathematics III (BI)" },
-    { code: "MATH5", name: "Mathematics V" },
-    { code: "CSEN1022", name: "Computer Programming for Engineers" },
-    { code: "CSEN301", name: "Data Structures and Algorithms" },
-    { code: "CSEN903", name: "Advanced Algorithms" },
-    { code: "DMET904", name: "Digital Image Processing" },
+    { code: "MATH3BI", name: "Math III (BI)" },
+    { code: "MATH5", name: "Discrete Mathematics" },
+    { code: "CSEN704", name: "Advanced Computer lab (Sem7)" },
+    { code: "CSEN1022", name: "Machine Learning" },
+    { code: "CSEN301", name: "Data structures and Algorithms" },
+    { code: "CSEN903", name: "Advanced Computer lab (Unity)" },
+    { code: "DMET904", name: "Advanced Media Lab" },
     { code: "DMET901", name: "Computer Vision" },
     { code: "CSEN901", name: "Artificial Intelligence" },
-    { code: "CSEN703", name: "Systems Analysis and Design" },
+    { code: "CSEN703", name: "Analysis and Design of Algorithms" },
     { code: "CSEN701", name: "Embedded Systems" },
     { code: "CSEN702", name: "Microprocessors" },
     { code: "CSEN605", name: "Digital System Design" },
-    { code: "CSEN501", name: "Software Engineering" },
-    { code: "DMET501", name: "Introduction to Media Technology" },
-    { code: "CSIS301", name: "Information Security" },
-    { code: "CSIS104", name: "Introduction to Pharmacy Informatics" },
-    { code: "CSIS105", name: "Computer Ethics" },
-    { code: "CSEN503", name: "Computer Networks" },
-    { code: "CSIS101", name: "Introduction to Computer Science" },
+    { code: "CSEN501", name: "Database I" },
+    { code: "DMET501", name: "Introduction to Digital Media" },
+    { code: "CSIS301", name: "Data Structures & Algorithms" },
+    { code: "CSIS104", name: "CS1 Pharmacy" },
+    { code: "CSIS105", name: "Introduction to Computer Science" },
+    { code: "CSEN503", name: "Introduction To Communication Networks" },
+    { code: "CSIS101", name: "Introduction to Computer Science I" },
     { code: "DMET502", name: "Computer Graphics" },
-    { code: "CSEN909", name: "Selected Topics in Computer Engineering" },
-    { code: "BINF711", name: "Bioinformatics" },
-    { code: "CSEN933", name: "Advanced Topics in Computer Engineering" },
-    { code: "DMET706", name: "Multimedia Systems" },
-    { code: "DMET703", name: "Human-Computer Interaction" },
-    { code: "DMET702", name: "Computer Animation" },
-    { code: "DMET704", name: "Virtual Reality" },
-    { code: "CSEN102", name: "Introduction to Computer Science" },
-    { code: "CSIS102", name: "Introduction to Information Technology" },
-    { code: "CSIS402", name: "Introduction to Network Security" },
-    { code: "CSEN401", name: "Computer Architecture" },
-    { code: "CSEN403", name: "Operating Systems" },
-    { code: "CSEN404", name: "Introduction to Networks" },
+    { code: "CSEN909", name: "Human Computer Interaction" },
+    { code: "BINF711", name: "Information Security (BI)" },
+    { code: "CSEN933", name: "Artificial Intelligence (BI)" },
+    { code: "DMET706", name: "Advanced Media Lab" },
+    { code: "DMET703", name: "Video and Audio Technology" },
+    { code: "DMET702", name: "Visualization and Animation" },
+    { code: "DMET704", name: "Multimedia and Networking" },
+    { code: "CSEN102", name: "Introduction to computer science" },
+    { code: "CSIS102", name: "Introduction to Computer Science" },
+    { code: "CSIS402", name: "Computer Organization and System Programming" },
+    { code: "CSEN401", name: "Computer Programming Lab (Game)" },
+    { code: "CSEN403", name: "Concepts of Programming Languages" },
+    { code: "CSEN404", name: "Introduction to Networks (BI)" },
     { code: "CSEN601", name: "Computer Architecture" },
     { code: "DMET602", name: "Networks and Media Lab" },
     { code: "CSEN602", name: "Operating Systems" },
     { code: "CSEN603", name: "Software Engineering" },
-    { code: "CSEN604", name: "Database Systems II" },
+    { code: "CSEN604", name: "Database II" },
     { code: "NETW1009", name: "Cloud Computing" },
-    { code: "CSEN202", name: "Introduction to Computer Science II" },
-    { code: "CSIS202", name: "Introduction to Information Technology II" },
-  ];
+    { code: "CSEN202", name: "CS2 Engineering" },
+    { code: "CSIS202", name: "CS2 Management" }
+];
+
   const [quizDate, setQuizDate] = useState(null);
 
   const handleQuizChange = (index, field, value, slotNumber = 1) => {
@@ -230,7 +232,7 @@ function ScheduleTable({ data }) {
         TA_Name: tas.join(', ')
       }));
 
-      // Create the Excel sheet
+      // Create the Excel sheets
       const freeScheduleWS = XLSX.utils.json_to_sheet(freeScheduleData);
 
       // Append the sheet to the workbook
