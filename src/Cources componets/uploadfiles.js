@@ -28,7 +28,7 @@ export default function Uploaded() {
     });
     console.log(FormData);
 
-    axios.post('http://127.0.0.1:4000/upload_file   ', formData)
+    axios.post("https://mostafasallam.pythonanywhere.com/upload_file", formData)
       .then((response) => {
         
         console.log(response.data);

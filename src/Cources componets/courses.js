@@ -103,7 +103,7 @@ function CardInput() {
     setLoading(true);
     console.log(quizzes);
     axios
-      .post("http://127.0.0.1:4000/process_data", {
+      .post("https://mostafasallam.pythonanywhere.com/process_data", {
         quizzes: quizzes.map((quiz) => ({
           ...quiz,
           quiz_date: dayjs(quiz.quiz_date).format("YYYY-MM-DD"), // Format the date
