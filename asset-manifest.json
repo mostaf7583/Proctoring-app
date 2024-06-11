@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Proctoring-app/static/css/main.4d73786b.css",
-    "main.js": "/Proctoring-app/static/js/main.795b37e3.js",
+    "main.css": "/Proctoring-app/static/css/main.86cc1f65.css",
+    "main.js": "/Proctoring-app/static/js/main.5848e8c3.js",
     "index.html": "/Proctoring-app/index.html",
-    "main.4d73786b.css.map": "/Proctoring-app/static/css/main.4d73786b.css.map",
-    "main.795b37e3.js.map": "/Proctoring-app/static/js/main.795b37e3.js.map"
+    "main.86cc1f65.css.map": "/Proctoring-app/static/css/main.86cc1f65.css.map",
+    "main.5848e8c3.js.map": "/Proctoring-app/static/js/main.5848e8c3.js.map"
   },
   "entrypoints": [
-    "static/css/main.4d73786b.css",
-    "static/js/main.795b37e3.js"
+    "static/css/main.86cc1f65.css",
+    "static/js/main.5848e8c3.js"
   ]
 }
