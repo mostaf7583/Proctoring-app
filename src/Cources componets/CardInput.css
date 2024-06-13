@@ -42,37 +42,28 @@
 .container2 {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   width: 100%;
+  gap: 30px;
  
 }
 
-.date-picker {
-  width: 100%;
-  margin-right: 20px; /* Adjust the value as needed */
-}
-.text-field,
-.select-field {
 
- 
-  
-  width: 100%;
-  margin-left: 20px;
-  margin-right: 20px;
-  
-
-   
-  /* Use gap to space out the fields */
-}
 
 /* Add margin bottom for space between rows */
+.text-field {
+  width: 50%;
 
-
+}
+.select-field{
+  width: 25%;
+}
 .button {
-  width: 100%;
+  width: 50%;
   margin-bottom: 2%;
   flex-direction: row;
   justify-content: space-between;
+
 }
 
 .export-button {

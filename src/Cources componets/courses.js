@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { List, ListItem, ListItemText, TextField } from "@material-ui/core";
-import { Autocomplete } from "@mui/material";
+import {  List, ListItem, ListItemText, TextField } from "@material-ui/core";
+import { Autocomplete, FormControl,InputLabel,Select } from "@mui/material";
 import { Button } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -8,7 +8,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import axios from "axios";
 import dayjs, { Dayjs } from "dayjs";
 import { MenuItem } from "@mui/material";
-import { Select } from "@mui/material";
 import { CircularProgress } from "@mui/material";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import {
@@ -170,19 +169,25 @@ function CardInput() {
             required
           />
 
-          <Select
-            label="Slot Number"
-            value={quiz.slot}
-            onChange={(e) => handleQuizChange(index, "slot", e.target.value)}
-            className="select-field"
-            required
-          >
-            <MenuItem value="1">1</MenuItem>
-            <MenuItem value="2">2</MenuItem>
-            <MenuItem value="3">3</MenuItem>
-            <MenuItem value="4">4</MenuItem>
-            <MenuItem value="5">5</MenuItem>
-          </Select>
+          
+<FormControl className="select-field">
+      <InputLabel id="slot-label">Slot</InputLabel>
+      <Select
+        labelId="slot-label"
+        value={quiz.slot}
+        label="Slot"
+        onChange={(e) => handleQuizChange(index, "slot", e.target.value)}
+        required
+      >
+        <MenuItem value="1">1</MenuItem>
+        <MenuItem value="2">2</MenuItem>
+        <MenuItem value="3">3</MenuItem>
+        <MenuItem value="4">4</MenuItem>
+        <MenuItem value="5">5</MenuItem>
+      </Select>
+    </FormControl>
+
+          
 
           <Button onClick={() => handleRemoveQuiz(index)} className="button">Remove Quiz</Button>
           </div>
