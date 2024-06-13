@@ -121,7 +121,9 @@ function CardInput() {
     <div className="card-input">
       {quizzes.map((quiz, index) => (
         <div key={index} className="quiz-container">
+          <div className="container1">
           <Autocomplete
+          className="courses"
             multiple
             options={courses}
             getOptionLabel={(option) => `${option.code}: ${option.name}`}
@@ -140,7 +142,8 @@ function CardInput() {
               option && value && option.code === value.code
             }
           />
-
+          </div>
+            <div className="container2">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               required
@@ -154,7 +157,7 @@ function CardInput() {
               className="date-picker"
             />
           </LocalizationProvider>
-
+            
           <TextField
             type="number"
             label="Number of TAs"
@@ -182,6 +185,7 @@ function CardInput() {
           </Select>
 
           <Button onClick={() => handleRemoveQuiz(index)} className="button">Remove Quiz</Button>
+          </div>
         </div>
       ))}
 

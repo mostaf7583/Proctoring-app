@@ -14,25 +14,59 @@
 .button-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between; /* Optional: Adds space between buttons */
+  justify-content: space-between;
+  /* Optional: Adds space between buttons */
 }
+
+
+.quiz-container {
+  display: flex;
+  flex-direction: column;
+  /* Change this to row to place items beside each other */
+  justify-content: space-between;
+  max-width: 100%;
+  /* Adjust the max-width to fit within the container */
+  margin: 0 10px;
+  padding: 20px 0;
+  gap: 1rem;
+}
+
 
 /* Change display to inline-block for inline alignment */
-.date-picker,
-.text-field,
-.select-field {
-  width: calc(33.33% - 20px); /* Adjust width as needed */
-  margin-right: 20px; /* Add margin between fields */
-  gap: 10rem;
-  
+.container1 {
+  display: inline-block;
+  width: 100%;
+
 }
 
-/* Additional margin to create space */
-.date-picker,
+.container2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+ 
+}
+
+.date-picker {
+  width: 100%;
+  margin-right: 20px; /* Adjust the value as needed */
+}
 .text-field,
 .select-field {
-  margin-bottom: 20px; /* Add margin bottom for space between rows */
+
+ 
+  
+  width: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+  
+
+   
+  /* Use gap to space out the fields */
 }
+
+/* Add margin bottom for space between rows */
+
 
 .button {
   width: 100%;
@@ -57,7 +91,7 @@
 }
 
 .export-button {
-  background-color: #52c41a; 
+  background-color: #52c41a;
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 4px;
@@ -74,7 +108,8 @@
   border-collapse: collapse;
   margin: 25px 0;
   font-size: 0.9em;
-  width: 90%; /* Change this to make the table take most of the screen */
+  width: 90%;
+  /* Change this to make the table take most of the screen */
 }
 
 .table-container thead tr {
