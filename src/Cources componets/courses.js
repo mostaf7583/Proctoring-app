@@ -21,6 +21,8 @@ import {
 } from "@mui/material";
 import * as XLSX from 'xlsx';
 import './CardInput.css'; // Import the CSS file
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function CardInput() {
 
@@ -187,13 +189,14 @@ function CardInput() {
       </Select>
     </FormControl>
 
-          
+    <IconButton onClick={() => handleRemoveQuiz(index)} aria-label="delete" className="delete" size="large">
+        <DeleteIcon fontSize="inherit" />
+      </IconButton>
 
-          <Button onClick={() => handleRemoveQuiz(index)} className="button">Remove Quiz</Button>
           </div>
         </div>
       ))}
-
+   
       <Button onClick={handleAddQuiz} className="button">Add Quiz</Button>
 
       {loading ? (

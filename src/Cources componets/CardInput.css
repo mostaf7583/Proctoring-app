@@ -9,7 +9,9 @@
   padding: 20px 0;
   gap: 1rem;
 }
-
+.delete{
+  color: red;
+}
 /* Add this to make buttons sit next to each other */
 .button-container {
   display: flex;
